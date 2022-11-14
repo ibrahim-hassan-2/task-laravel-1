@@ -20,7 +20,18 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
+
+            // relation betwen user and role tables
+            $table->bigInteger('role_id' , false , true)->unsigned()->index();
+            $table->foreign('role_id')
+                  ->references('id')
+                  ->on('role')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+
+
+             $table->timestamps();
+
         });
     }
 
